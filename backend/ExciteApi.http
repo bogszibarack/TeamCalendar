@@ -1,0 +1,6 @@
+@ExciteApi_HostAddress = http://localhost:5259
+
+GET {{ExciteApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

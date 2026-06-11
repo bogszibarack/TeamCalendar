@@ -1,0 +1,120 @@
+body {
+  background-color: #f5f7fb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.col {
+  flex: 1;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin-top: 0;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 10px;
+  color: #34495e;
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: 600;
+}
+
+form select, form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #eedecb;
+}
+
+th {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Conflict kiemelés az On-Call táblázatban */
+.conflict-row {
+  background-color: #fadbd8 !important;
+}
+
+.conflict-badge {
+  background-color: #e74c3c;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+/* Státusz színek */
+.status-pending { color: #f39c12; font-weight: bold; }
+.status-approved { color: #27ae60; font-weight: bold; }
+.status-rejected { color: #c0392b; font-weight: bold; }
+
+.btn-approve { background-color: #2ecc71; margin-right: 5px; }
+.btn-approve:hover { background-color: #27ae60; }
+.btn-reject { background-color: #e74c3c; }
+.btn-reject:hover { background-color: #c0392b; }
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.alert-danger { background-color: #fadbd8; color: #78281f; border: 1px solid #f5b7b1; }
+.alert-success { background-color: #d4efdf; color: #145a32; border: 1px solid #abebc6; }

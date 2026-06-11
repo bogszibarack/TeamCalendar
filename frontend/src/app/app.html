@@ -1,0 +1,130 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h3>New Leave Request</h3>
+        <form (ngSubmit)="submitLeave()">
+          <label>Team Member:</label>
+          <select [(ngModel)]="newLeave.teamMemberId" name="teamMemberId">
+            <option [value]="0">-- Select Member --</option>
+            <option *ngFor="let member of team" [value]="member.id">{{ member.name }}</option>
+          </select>
+
+          <label>Start Date:</label>
+          <input type="date" [(ngModel)]="newLeave.startDate" name="startDate">
+
+          <label>End Date:</label>
+          <input type="date" [(ngModel)]="newLeave.endDate" name="endDate">
+
+          <label>Reason:</label>
+          <input type="text" [(ngModel)]="newLeave.reason" name="reason" placeholder="e.g. Summer holiday">
+
+          <button type="submit">Submit Request</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Team Members</h3>
+        <ul>
+          <li *ngFor="let member of team">
+            <strong>ID: {{ member.id }}</strong> - {{ member.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <h3>On-Call Rotation Schedule</h3>
+        <p><small>If a person has approved leave during their on-call week, it will be highlighted.</small></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Period</th>
+              <th>On-Call Person</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let slot of onCallSchedule" [ngClass]="{'conflict-row': slot.isConflict}">
+              <td>Week {{ slot.weekNumber }}</td>
+              <td>{{ slot.weekStart | date:'yyyy.MM.dd' }} - {{ slot.weekEnd | date:'yyyy.MM.dd' }}</td>
+              <td>
+                <strong>{{ slot.teamMemberName }}</strong>
+                <span *ngIf="slot.isConflict" class="conflict-badge">⚠️ LEAVE CONFLICT</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 20px;">
+    <h3>All Leave Requests</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leave of leaves">
+          <td>{{ leave.id }}</td>
+          <td>{{ leave.teamMember?.name }}</td>
+          <td>{{ leave.startDate | date:'yyyy.MM.dd' }}</td>
+          <td>{{ leave.endDate | date:'yyyy.MM.dd' }}</td>
+          <td>{{ leave.reason }}</td>
+          <td>
+            <span [ngClass]="{
+              'status-pending': leave.status === 0,
+              'status-approved': leave.status === 1,
+              'status-rejected': leave.status === 2
+            }">
+              {{ getStatusLabel(leave.status) }}
+            </span>
+          </td>
+          <td>
+            <ng-container *ngIf="leave.status === 0">
+              
+              <div *ngIf="hasOnCallConflict(leave)">
+                <span style="color: #e74c3c; font-weight: bold; font-size: 0.85rem; display: block; margin-bottom: 5px;">
+                  ⚠️ ON-CALL CONFLICT! (Cannot Approve)
+                </span>
+                <button class="btn-reject" (click)="changeStatus(leave.id, 2)">Reject Request</button>
+              </div>
+
+              <div *ngIf="!hasOnCallConflict(leave)">
+                <button class="btn-approve" (click)="changeStatus(leave.id, 1)">Approve</button>
+                <button class="btn-reject" (click)="changeStatus(leave.id, 2)">Reject</button>
+              </div>
+
+            </ng-container>
+
+            <span *ngIf="leave.status === 1" style="color: #27ae60; font-weight: bold; font-size: 0.9rem;">
+              ✓ Processed (Approved)
+            </span>
+
+            <span *ngIf="leave.status === 2" style="color: #c0392b; font-weight: bold; font-size: 0.9rem;">
+              ✕ Processed (Rejected)
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="leaves.length === 0">
+          <td colspan="7" style="text-align: center; color: #888;">No leave requests found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
