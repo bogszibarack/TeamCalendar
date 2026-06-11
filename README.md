@@ -46,6 +46,7 @@ Zoneless Angular: Az Angular legújabb kísérleti Zoneless architektúráját a
 
 
 Megvalósított opcionális fejlesztések (Extrák)
+
 [x] Szabadság jóváhagyási munkafolyamat: Interaktív Approve/Reject gombok a vezetőnek.
 
 [x] Vizuális ütközés-kiemelés: CSS figyelmeztetések és dinamikus hibaüzenetek a felületen.
